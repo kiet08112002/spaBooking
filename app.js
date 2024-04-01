@@ -3,9 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const { CLIENT_RENEG_LIMIT } = require('tls');
 
 var app = express();
 
@@ -19,8 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+app.use('/', require('./routes/index'));
+
+mongoose.connect('mongodb://localhost:27017/SpaBookingdb').then(function(){
+  console.log('Connected');
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
