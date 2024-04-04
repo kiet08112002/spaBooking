@@ -12,9 +12,9 @@ router.get('/',async function(req,res,next){
 router.post('/', async function (req, res, next) {
     try {
       var newstaff = new staffModel({
-        Name: req.body.Name,
+        FullName: req.body.FullName,
         UserName: req.body.UserName,
-        Pasword: req.body.Pasword,
+        Password: req.body.Password,
         Email: req.body.Email,
         RoleID: req.body.RoleID,
         CCCD: req.body.CCCD,

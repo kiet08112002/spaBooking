@@ -3,18 +3,22 @@ var router = express.Router();
 var ResHelper = require('../helper/ResponseHelper');
 var clientModel = require('../schema/client');
 
+var clientValidator = require('../validators/user');
+var { validationResult } = require('express-validator');
+
+//async hàm bất đồng bộ
 router.get('/',async function(req,res,next){
     let clients = await clientModel.find({}).exec();
     ResHelper.RenderRes(res,true,clients);
 })
 
-router.post('/', async function (req, res, next) {
+router.post('/register', async function (req, res, next) {
     try {
       var newclient = new clientModel({
-        _id: req.body._id,
         FullName: req.body.FullName,
         Username: req.body.Username,
-        Pasword: req.body.Pasword,
+        Password: req.body.Password,
+        SDT: req.body.SDT,
         Email: req.body.Email,
         Birthday:req.body.Birthday
       })
