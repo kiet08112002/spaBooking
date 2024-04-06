@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ResHelper = require('../helper/ResponseHelper');
 var staffModel = require('../schema/staff');
-
+var checkAuthorize = require('../middlewares/checkauthorize');
 var checklogin = require('../middlewares/checklogin');
 var staffValidator = require('../validators/user');
 var { validationResult } = require('express-validator');
