@@ -1,11 +1,9 @@
 var express = require('express');
-const { route } = require('./services');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
-  //res.send('Wealcom to home page.');
 });
 
  router.use('/services',require('./services'));

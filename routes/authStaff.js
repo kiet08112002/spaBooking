@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var ResHelper = require('../helper/ResponseHelper');
 var staffModel = require('../schema/staff');
-var checkAuthorize = require('../middlewares/checkauthorize');
 var checklogin = require('../middlewares/checklogin');
-var staffValidator = require('../validators/user');
 var { validationResult } = require('express-validator');
+var staffValidator = require('../validators/user');
+var sendmail = require('../helper/sendMail');
+const config = require('../configs/config');
 
 //tạo tài khoản mới
 router.post('/register', staffValidator.checkEmail(), staffValidator.checkPassword(), staffValidator.checkUserName(), async function (req, res, next) {
@@ -45,6 +46,7 @@ router.get('/me', checklogin, async function (req, res, next) {
 //     ResHelper.RenderRes(res, true, result.getJWT());
 //   }
 // });
+
 router.post('/login', async function (req, res, next) {
   var result = await staffModel.GetCre(req.body.UserName, req.body.Password);
   console.log(result);
@@ -77,6 +79,55 @@ router.post('/logout', checklogin, function (req, res, next) {
         data: result.getJWT()
       }
       );
+  }
+})
+
+//Reset Password!!!!!!!!
+router.post("/forgotPassword", async function (req, res, next) {
+  var staff = await staffModel.findOne({
+    Email: req.body.Email
+  })
+  if (staff) {
+    let token = staff.genTokenResetPassword();
+    await staff.save();
+    try {
+      let url = `http://${config.hostName}/authstaff/ResetPassword/${token}`;
+      let message = `click zo url de reset passs: ${url}`
+      sendmail(message, staff.Email);
+      ResHelper.RenderRes(res, true, "Thanh cong");
+
+    } catch (error) {
+      staff.resetPasswordToken = undefined;
+      staff.resetPasswordExp = undefined;
+      await staff.save();
+      ResHelper.RenderRes(res, false, error);
+    }
+  } else {
+    ResHelper.RenderRes(res, false, "email khong ton tai");
+  }
+})
+
+router.post("/ResetPassword/:token", staffValidator.checkPassword(), async function (req, res, next) {
+  var result = validationResult(req);
+  if (result.errors.length > 0) {
+    ResHelper.RenderRes(res, false, result.errors);
+    return;
+  }
+  var staff = await staffModel.findOne({
+    resetPasswordToken: req.params.token
+  })
+  if (staff) {
+    if (staff.resetPasswordExp > Date.now()) {
+      staff.Password = req.body.Password;
+      staff.resetPasswordToken = undefined;
+      staff.resetPasswordExp = undefined;
+      await staff.save();
+      ResHelper.RenderRes(res, true, "Reset thanh cong");
+    } else {
+      ResHelper.RenderRes(res, false, "URL het han");
+    }
+  } else {
+    ResHelper.RenderRes(res, false, "URL khong hop le");
   }
 })
 

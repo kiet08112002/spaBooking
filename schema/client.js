@@ -28,7 +28,9 @@ var clientdb = new mongoose.Schema({
     Birthday: {
         type: String,
         required: true
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExp: String
 },{timestamps: true})
 
 clientdb.pre('save', function () {

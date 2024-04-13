@@ -5,11 +5,6 @@ const config = require('../configs/config');
 var crypto = require('crypto');
 
 var staffdb = new mongoose.Schema({
-    // _id: {
-    //     type: String,
-    //     required: true,
-    //     unique: true
-    // },
     FullName: {
         type: String,
         required: true
@@ -41,7 +36,9 @@ var staffdb = new mongoose.Schema({
     Deleted: {
         type: Boolean,
         default: false
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExp: String
 },{timestamps: true})
 
 staffdb.pre('save', function () {
