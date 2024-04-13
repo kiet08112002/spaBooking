@@ -5,16 +5,15 @@ var bookingModel = require('../schema/bookingdetail');
 
 
 router.get('/',async function(req,res,next){
-    let bookings = await serviceModle.find({}).exec();
+    let bookings = await bookingModel.find({}).exec();
     ResHelper.RenderRes(res,true,bookings);
 })
 
 router.post('/', async function (req, res, next) {
     try {
       var newbooking = new bookingModel({
-        Name: req.body.Name,
-        TypeID: req.body.TypeID,
-        Description: req.body.Description,
+        BookingID: req.body.BookingID,
+        ServiceID: req.body.ServiceID,
         Price: req.body.Price
       })
       await newbooking.save();
@@ -24,31 +23,31 @@ router.post('/', async function (req, res, next) {
     }
 });
 
-router.put('/:id', async function (req, res, next) {
-    try {
-      let bookings = await bookingModel.findByIdAndUpdate
-        (req.params.id, req.body, {
-          new: true
-        }).exec()
-      ResHelper.RenderRes(res, true, bookings);
-    } catch (error) {
-      ResHelper.RenderRes(res, false, error)
-    }
-});
+// router.put('/:id', async function (req, res, next) {
+//     try {
+//       let bookings = await bookingModel.findByIdAndUpdate
+//         (req.params.id, req.body, {
+//           new: true
+//         }).exec()
+//       ResHelper.RenderRes(res, true, bookings);
+//     } catch (error) {
+//       ResHelper.RenderRes(res, false, error)
+//     }
+// });
   
   
-router.delete('/:id', async function (req, res, next) {
-    try {
-      let bookings = await bookingModel.findByIdAndUpdate
-        (req.params.id, {
-          isDeleted: true
-        }, {
-          new: true
-        }).exec()
-      ResHelper.RenderRes(res, true, bookings);
-    } catch (error) {
-      ResHelper.RenderRes(res, false, error)
-    }
-});
+// router.delete('/:id', async function (req, res, next) {
+//     try {
+//       let bookings = await bookingModel.findByIdAndUpdate
+//         (req.params.id, {
+//           isDeleted: true
+//         }, {
+//           new: true
+//         }).exec()
+//       ResHelper.RenderRes(res, true, bookings);
+//     } catch (error) {
+//       ResHelper.RenderRes(res, false, error)
+//     }
+// });
 
 module.exports = router;

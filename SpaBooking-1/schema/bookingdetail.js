@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var bookingdtdb = new mongoose.Schema({
-    _id:{
+    BookingID:{
         type: mongoose.Types.ObjectId,
         ref: 'booking'
     },
@@ -13,6 +13,6 @@ var bookingdtdb = new mongoose.Schema({
         type: Number,
         requied:true
     }
-},{timestamps: true})
+})
 
 module.exports = new mongoose.model('bookingdetail', bookingdtdb);

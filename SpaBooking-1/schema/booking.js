@@ -14,7 +14,7 @@ var bookingdb = new mongoose.Schema({
         requied: true
     },
     Time: {
-        type: Time,
+        type: String,
         requied: true
     }
 },{timestamps: true})
@@ -22,7 +22,7 @@ var bookingdb = new mongoose.Schema({
 bookingdb.virtual('published',{
     ref:'bookingdetail',
     localField:'_id',
-    foreignField :'_id'
+    foreignField :'BookingID'
 })
 bookingdb.set('toJSON',{virtuals:true});
 bookingdb.set('toObject',{virtuals:true});
