@@ -33,7 +33,7 @@ var staffdb = new mongoose.Schema({
         type: String,
         required: true
     },
-    Deleted: {
+    isDeleted: {
         type: Boolean,
         default: false
     },

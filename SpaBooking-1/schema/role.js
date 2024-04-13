@@ -5,7 +5,7 @@ var roledb = new mongoose.Schema({
         type: String,
         required: true
     },
-    Deleted: {
+    isDeleted: {
         type: Boolean,
         default: false
     },

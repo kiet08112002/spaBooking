@@ -11,7 +11,7 @@ var servicedb = new mongoose.Schema({
     },
     Description: String,
     Price: Number  ,
-    Delete: {
+    isDelete: {
         type: Boolean,
         default: false
     },
