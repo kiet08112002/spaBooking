@@ -1,0 +1,59 @@
+Table Service{
+  ServiceID int [pk]
+  ServiceName String
+  TypeServiceID int
+  Descrisble string
+  Price double
+  Created date
+  Deleted date
+  staff int
+}
+Table TypeService{
+  TypeServiceID int [pk]
+  TypeServiceName string
+}
+Table Staff{
+  StaffID int [pk]
+  FullName string
+  UserName string
+  Password string
+  email string
+  RoleID int
+  NumberPhone string
+  CCCD string
+  Address string
+}
+Table Role{
+  RoleID int [pk]
+  RoleName string
+}
+Table Booking{
+  BookingID int [pk]
+  ClientID string
+  Fullname string
+  Time datetime
+}
+Table BookingDetail{
+  BookingID int [pk]
+  ServiceID int
+  Price double
+}
+Table Client{
+  NumberPhone string [pk]
+  FullName string
+  username string
+  password string
+  email string
+  Birthday datetime
+}
+
+
+Ref: "Booking"."BookingID" < "BookingDetail"."BookingID"
+
+Ref: "Service"."ServiceID" < "BookingDetail"."BookingID"
+
+Ref: "TypeService"."TypeServiceID" < "Service"."TypeServiceID"
+
+Ref: "Role"."RoleID" < "Staff"."RoleID"
+
+Ref: "Client"."NumberPhone" < "Booking"."ClientID"
