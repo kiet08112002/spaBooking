@@ -10,20 +10,23 @@ var checkAuthorize = require('../middlewares/checkauthorize');
 
 //async hàm bất đồng bộ
 
-router.get('/', checklogin, checkAuthorize, async function(req,res,next){
+router.get('/', async function(req,res,next){
     let clients = await clientModel.find({}).exec();
     ResHelper.RenderRes(res,true,clients);
 })
 
-router.get('/:id', async function (req, res, next) {
+router.get('/:phone', async function (req, res, next) {
   try {
-    let clients = await clientModel.find({ _id: req.params.id }).exec();
-    ResHelper.RenderRes(res, true, clients)
+    let clients = await clientModel.find({ SDT: req.params.phone }).exec();
+    if(clients[0]){
+      ResHelper.RenderRes(res, true, clients)
+    }else{
+      ResHelper.RenderRes(res, false, clients)
+    }
   } catch (error) {
     ResHelper.RenderRes(res, false, error)
   }
 });
-
 // router.post('/register', async function (req, res, next) {
 //     try {
 //       var newclient = new clientModel({

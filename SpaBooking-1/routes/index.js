@@ -17,6 +17,9 @@ router.get('/', function(req, res, next) {
  router.use('/auth',require('./auth'));
  router.use('/authstaff', require('./authStaff'));
 
+ router.use('/bookings', require('./bookings'));
+ router.use('/bookingdetails', require('./bookingdetails'));
+
  router.use('/users', require('./users'));
 
 module.exports = router;

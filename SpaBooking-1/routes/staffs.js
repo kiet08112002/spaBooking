@@ -6,7 +6,7 @@ var checklogin = require('../middlewares/checklogin');
 var checkAuthorize = require('../middlewares/checkauthorize');
 var roleMD = require('../schema/role');
 
-router.get('/',checklogin,checkAuthorize("660c3d178b3bcac33fcbe97c"), async function(req,res,next){
+router.get('/', async function(req,res,next){
     let staffs = await staffModel.find({}).exec();
     ResHelper.RenderRes(res, true, staffs);
 })
@@ -28,7 +28,14 @@ router.get('/',checklogin,checkAuthorize("660c3d178b3bcac33fcbe97c"), async func
 //       ResHelper.RenderRes(res, false, error)
 //     }
 // });
-
+router.get('/:id', async function (req, res, next) {
+  try {
+    let staff = await staffModel.find({ _id: req.params.id }).exec();
+    ResHelper.RenderRes(res, true, staff)
+  } catch (error) {
+    ResHelper.RenderRes(res, false, error)
+  }
+});
 router.put('/:id', async function (req, res, next) {
     try {
       let staffs = await staffModel.findByIdAndUpdate

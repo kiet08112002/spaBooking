@@ -76,7 +76,7 @@ router.post('/logout', checklogin, function (req, res, next) {
       })
       .send({
         success: true,
-        data: result.getJWT()
+        data: "đã đăng xuất" //result.getJWT()
       }
       );
   }
@@ -91,7 +91,7 @@ router.post("/forgotPassword", async function (req, res, next) {
     let token = staff.genTokenResetPassword();
     await staff.save();
     try {
-      let url = `http://${config.hostName}/authstaff/ResetPassword/${token}`;
+      let url = `http://localhost:4200/resetpassword/${token}`;
       let message = `click zo url de reset passs: ${url}`
       sendmail(message, staff.Email);
       ResHelper.RenderRes(res, true, "Thanh cong");

@@ -8,7 +8,10 @@ router.get('/',async function(req,res,next){
     let services = await serviceModle.find({}).exec();
     ResHelper.RenderRes(res,true,services);
 })
-
+router.get('/:id',async function(req,res,next){
+  let services = await serviceModle.find({ _id: req.params.id}).exec();
+  ResHelper.RenderRes(res,true,services);
+})
 router.post('/', async function (req, res, next) {
     try {
       var newservice = new serviceModle({

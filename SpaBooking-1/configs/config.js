@@ -4,6 +4,6 @@ module.exports = {
     hostName: 'localhost:3000',
     Host: "sandbox.smtp.mailtrap.io",
     Port: 25,
-    Username: "af96fd34aba17d",
-    Password: "181df2ce8a7473"
+    Username: "a8c0b609179585",
+    Password: "d83b65cedd7d3b"
 }

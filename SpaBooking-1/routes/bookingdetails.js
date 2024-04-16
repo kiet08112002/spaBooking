@@ -8,8 +8,11 @@ router.get('/',async function(req,res,next){
     let bookings = await bookingModel.find({}).exec();
     ResHelper.RenderRes(res,true,bookings);
 })
-
-router.post('/', async function (req, res, next) {
+router.get('/:bookingid',async function(req,res,next){
+  let booking = await bookingModel.find({ BookingID: req.params.bookingid }).exec();
+  ResHelper.RenderRes(res,true,booking);
+})
+router.post('/',async function (req, res, next) {
     try {
       var newbooking = new bookingModel({
         BookingID: req.body.BookingID,
